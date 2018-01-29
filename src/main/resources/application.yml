@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/falcondb
+    username: falcon_usr
+    password: Db12PwD
+    test-on-borrow: true
+    validation-query: SELECT 1
+    validation-interval: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    transaction-timeout: 1000
+    hibernate:
+        ddl-auto: validate
+
+flyway:
+  enabled: true
+  sql-migration-suffix: .sql
+  sql-migration-prefix: V
+  baselineOnMigrate: true

@@ -1,0 +1,4 @@
+This folder contains the flyway scripts for Moon Travel Service.
+The name of the file should be:
+
+V(release_number)_(sequence_number)__(issue_number)_Short_description.sql  eg. V001.0.0_001__AAA-001_Test_script.sql
