@@ -1,0 +1,55 @@
+swagger: '2.0'
+info:
+  title: Falcon Test REST API
+  version: "1.0.0"
+  description: |
+    API for the Falcon Test Service. The API covers the functionality to create and read different (currently Tumblr) social site data.
+
+    The API is based on REST and only consumes JSON requests.
+
+    **Security**
+
+    Currently the endpoints are not secure.
+
+
+host: localhost
+schemes:
+  - http
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /api/v1/services/tumblr:
+    post:
+      summary: Endpoint to add a new tumblr account to the system
+      parameters:
+        - in: body
+          name: body
+          description: The body with the tumblr account details
+          schema:
+            $ref: '#/definitions/AddTumblrAccountRequest'
+      responses:
+        202:
+          description: The data was published for creation
+
+definitions:
+  AddTumblrAccountRequest:
+    type: object
+    description: The body definition
+    required:
+      - name
+      - type
+      - popularity
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+      popularity:
+        type: integer
+        minimum: 1
+        maximum: 5
+
