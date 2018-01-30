@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/falcondb
-    username: falcon_usr
-    password: Db12PwD
+    driver-class-name: \${FA_DB_DRIVER}
+    url: \${FA_DB_URL}
+    username: \${FA_DB_USER}
+    password: \${FA_DB_PASSWORD}
     test-on-borrow: true
     validation-query: SELECT 1
     validation-interval: 30000

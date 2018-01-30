@@ -1,0 +1,15 @@
+spring:
+  profiles: unittest
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:ps;MODE=MySQL;DB_CLOSE_DELAY=-1;IGNORECASE=TRUE;DB_CLOSE_ON_EXIT=FALSE
+    username:
+    password:
+  jpa:
+    show-sql: false
+    transaction-timeout: 3000
+    hibernate:
+      ddl-auto: update
+
+flyway:
+  enabled: false

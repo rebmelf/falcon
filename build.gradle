@@ -37,14 +37,15 @@ configurations {
 }
 
 dependencies {
-  compile group: 'mysql',                        name: 'mysql-connector-java'
-  compile group: 'org.flywaydb',                 name: 'flyway-core',                   version:'5.0.6'
-  compile group: 'org.springframework.boot',     name: 'spring-boot-starter-data-jpa'
-  compile group: 'org.springframework.boot',     name: 'spring-boot-starter-web'
+  compile     group: 'mysql',                    name: 'mysql-connector-java'
+  compile     group: 'org.flywaydb',             name: 'flyway-core',                   version:'5.0.6'
+  compile     group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+  compile     group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 
   compile     group: 'com.querydsl',             name: 'querydsl-jpa',                  version:'4.1.4'
   querydslapt group: 'com.querydsl',             name: 'querydsl-apt',                  version:'4.1.4'
 
+  testCompile group: 'com.h2database',           name: 'h2',                            version: '1.4.190'
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 
