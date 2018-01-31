@@ -1,6 +1,7 @@
 package io.falcon.falcontest.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,6 +22,13 @@ public class TumblrAccountsController {
   @Autowired
   private SocialMessagePublisher messagePublisher;
 
+  private SimpMessagingTemplate template;
+
+  @Autowired
+  public TumblrAccountsController(SimpMessagingTemplate template) {
+    this.template = template;
+  }
+
   @RequestMapping(
     method = POST,
     consumes = APPLICATION_JSON_VALUE,
@@ -28,5 +36,6 @@ public class TumblrAccountsController {
   @ResponseStatus(ACCEPTED)
   public void addTumblrAccount(@RequestBody final AddTumblrAccountRequest addTumblrAccountRequest) {
     messagePublisher.publish(addTumblrAccountRequest);
+    template.convertAndSend("/topic/received-messages", addTumblrAccountRequest);
   }
 }
