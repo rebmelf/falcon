@@ -2,7 +2,7 @@ package io.falcon.falcontest.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AddTumblrAccountRequest {
+public class AddTumblrAccountRequest implements BaseRequest {
 
   @JsonProperty
   private String name;
