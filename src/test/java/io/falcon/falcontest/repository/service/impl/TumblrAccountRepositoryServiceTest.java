@@ -1,7 +1,9 @@
 package io.falcon.falcontest.repository.service.impl;
 
+import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 import io.falcon.falcontest.AbstractServiceTest;
 import io.falcon.falcontest.model.TumblrAccount;
@@ -21,30 +23,66 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
 
   @Test
   public void createTumblrAccount() {
-    final String id = "testId";
-    TumblrAccount tumblrAccount = tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(id));
+    TumblrAccount tumblrAccount = tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("testId", "name"));
 
     final TumblrAccount persistedAcc = tumblrAccountRepository.findOne("testId");
+
     assertThat(persistedAcc.getName(), is(tumblrAccount.getName()));
   }
 
   @Test
   public void onlyOneRecordCreatedWithTheSameName() {
-    final String id1 = "testId1";
-    final String id2 = "testId2";
+    final String name = "Test Name";
 
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(id1));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(id2));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("testId1", name));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("testId2", name));
 
     final long records = tumblrAccountRepository.count();
     assertThat(records, is(1L));
   }
 
-  private TumblrAccount tumblrAccount(final String id) {
+  @Test
+  public void pagingWithValueToReturn() {
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id1", "name1"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id2", "name2"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id3", "name3"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id4", "name4"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id5", "name5"));
+
+    final Page<TumblrAccount> page = tumblrAccountRepositoryService.findAll(0, 4);
+
+    assertThat(page.getTotalElements(), is(5L));
+    assertThat(page.getTotalPages(), is(2));
+    assertThat(page.getContent().size(), is(4));
+  }
+
+  @Test
+  public void notExistingPage() {
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id1", "name1"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id2", "name2"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id3", "name3"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id4", "name4"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id5", "name5"));
+
+    final Page<TumblrAccount> page = tumblrAccountRepositoryService.findAll(2, 4);
+
+    assertThat(page.getTotalElements(), is(5L));
+    assertThat(page.getTotalPages(), is(2));
+    assertThat(page.getContent().size(), is(0));
+  }
+
+  @After
+  public void deleteAccounts() {
+    tumblrAccountRepository.deleteAll();
+  }
+
+  private TumblrAccount tumblrAccount(final String id, final String name) {
     return new TumblrAccount()
       .setId(id)
-      .setName("Test Name")
+      .setName(name)
       .setAccType("Test Type")
       .setPopularity(3);
   }
+
+
 }

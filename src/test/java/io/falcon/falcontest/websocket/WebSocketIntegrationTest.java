@@ -46,12 +46,12 @@ public class WebSocketIntegrationTest extends AbstractServiceTest {
     StompSession session = stompClient
       .connect(createUrl(), new StompSessionHandlerAdapter() {
       })
-      .get(10, SECONDS);
+      .get(3, SECONDS);
     session.subscribe(WEBSOCKET_TOPIC, new CustomStompFrameHandler());
 
     session.send(WEBSOCKET_TOPIC, jsonMessage().getBytes());
 
-    assertEquals(jsonMessage(), blockingQueue.poll(10, SECONDS));
+    assertEquals(jsonMessage(), blockingQueue.poll(3, SECONDS));
   }
 
   private class CustomStompFrameHandler implements StompFrameHandler {
