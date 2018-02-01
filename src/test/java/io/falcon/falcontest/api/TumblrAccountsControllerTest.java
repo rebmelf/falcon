@@ -11,8 +11,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.falcon.falcontest.AbstractMvcTest;
-import io.falcon.falcontest.api.entity.AddTumblrAccountRequest;
+import io.falcon.falcontest.api.tumblr.accounts.TumblrAccountsController;
+import io.falcon.falcontest.api.tumblr.accounts.entity.AddTumblrAccountRequest;
 import io.falcon.falcontest.redis.publisher.SocialMessagePublisher;
+import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,6 +30,9 @@ public class TumblrAccountsControllerTest extends AbstractMvcTest {
 
   @MockBean
   private SimpMessagingTemplate messagingTemplate;
+
+  @MockBean
+  private TumblrAccountRepositoryService tumblrAccountRepositoryService;
 
   @Test
   public void addAccount() throws Exception {

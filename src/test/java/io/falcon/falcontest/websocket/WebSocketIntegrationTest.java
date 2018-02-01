@@ -51,7 +51,7 @@ public class WebSocketIntegrationTest extends AbstractServiceTest {
 
     session.send(WEBSOCKET_TOPIC, jsonMessage().getBytes());
 
-    assertEquals(jsonMessage(), blockingQueue.poll(1, SECONDS));
+    assertEquals(jsonMessage(), blockingQueue.poll(10, SECONDS));
   }
 
   private class CustomStompFrameHandler implements StompFrameHandler {

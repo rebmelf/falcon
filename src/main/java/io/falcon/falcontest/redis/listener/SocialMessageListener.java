@@ -6,7 +6,7 @@ import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.falcon.falcontest.api.entity.AddTumblrAccountRequest;
+import io.falcon.falcontest.api.tumblr.accounts.entity.AddTumblrAccountRequest;
 import io.falcon.falcontest.model.TumblrAccount;
 import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 

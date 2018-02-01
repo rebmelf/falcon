@@ -1,6 +1,7 @@
-package io.falcon.falcontest.api.entity;
+package io.falcon.falcontest.api.tumblr.accounts.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.falcon.falcontest.api.entity.BaseRequest;
 
 public class AddTumblrAccountRequest implements BaseRequest {
 
