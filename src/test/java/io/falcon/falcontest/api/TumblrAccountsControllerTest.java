@@ -56,7 +56,7 @@ public class TumblrAccountsControllerTest extends AbstractMvcTest {
     when(tumblrAccountRepositoryService.findAll(0, 5))
       .thenReturn(getAllRecords());
 
-    mvc.perform(get(TUMBLR_ACCOUNTS_BASE_URI + "?page=0&next=5")
+    mvc.perform(get(TUMBLR_ACCOUNTS_BASE_URI + "?page=0&size=5")
       .contentType(APPLICATION_JSON_UTF8))
       .andExpect(status().isOk());
   }

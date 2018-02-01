@@ -4,15 +4,15 @@ public class TumblrAccountsRequest {
 
   private Integer page;
 
-  private Integer next;
+  private Integer size;
 
   public TumblrAccountsRequest setPage(final Integer page) {
     this.page = page;
     return this;
   }
 
-  public TumblrAccountsRequest setNext(final Integer next) {
-    this.next = next;
+  public TumblrAccountsRequest setSize(final Integer size) {
+    this.size = size;
     return this;
   }
 
@@ -20,7 +20,7 @@ public class TumblrAccountsRequest {
     return page;
   }
 
-  public Integer getNext() {
-    return next;
+  public Integer getSize() {
+    return size;
   }
 }

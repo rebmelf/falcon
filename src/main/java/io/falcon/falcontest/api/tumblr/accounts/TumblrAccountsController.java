@@ -59,7 +59,7 @@ public class TumblrAccountsController {
     produces = APPLICATION_JSON_VALUE)
   @ResponseStatus(OK)
   public TumblrAccountsResponse getAccountPage(TumblrAccountsRequest requestParams) {
-    final Page<TumblrAccount> page = tumblrAccountRepositoryService.findAll(requestParams.getPage(), requestParams.getNext());
+    final Page<TumblrAccount> page = tumblrAccountRepositoryService.findAll(requestParams.getPage(), requestParams.getSize());
     return transformer.convert(page);
   }
 
