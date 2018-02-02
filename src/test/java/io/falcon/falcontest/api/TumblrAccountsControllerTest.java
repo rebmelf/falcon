@@ -17,6 +17,8 @@ import io.falcon.falcontest.api.tumblr.accounts.TumblrAccountsController;
 import io.falcon.falcontest.api.tumblr.accounts.entity.AddTumblrAccountRequest;
 import io.falcon.falcontest.model.TumblrAccount;
 import io.falcon.falcontest.redis.publisher.SocialMessagePublisher;
+import io.falcon.falcontest.repository.ServiceExceptionMessages;
+import io.falcon.falcontest.repository.service.ServiceException;
 import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 
 import static java.util.Arrays.asList;
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TumblrAccountsController.class)
@@ -59,6 +62,17 @@ public class TumblrAccountsControllerTest extends AbstractMvcTest {
     mvc.perform(get(TUMBLR_ACCOUNTS_BASE_URI + "?page=0&size=5")
       .contentType(APPLICATION_JSON_UTF8))
       .andExpect(status().isOk());
+  }
+
+  @Test
+  public void getAccountPageWithMissingParam() throws Exception {
+    when(tumblrAccountRepositoryService.findAll(null, null))
+      .thenThrow(new ServiceException(ServiceExceptionMessages.PAGE_SIZE_MISSING));
+
+    mvc.perform(get(TUMBLR_ACCOUNTS_BASE_URI)
+      .contentType(APPLICATION_JSON_UTF8))
+      .andExpect(status().isBadRequest())
+      .andExpect(jsonPath("$.errorMessage").value("Page and/or size parameters are missing"));
   }
 
   private String getAddAccountRequestJson() throws JsonProcessingException {

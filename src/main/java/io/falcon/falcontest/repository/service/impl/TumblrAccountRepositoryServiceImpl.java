@@ -14,11 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.falcon.falcontest.model.TumblrAccount;
 import io.falcon.falcontest.repository.TumblrAccountRepository;
+import io.falcon.falcontest.repository.service.ServiceException;
 import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 
 import static io.falcon.falcontest.message.LogMessage.SAVING_ACCOUNT;
 import static io.falcon.falcontest.message.LogMessage.SEARCH_FOR_EXISTING_ACCOUNT;
 import static io.falcon.falcontest.message.LogMessage.getLogMessage;
+import static io.falcon.falcontest.repository.ServiceExceptionMessages.PAGE_SIZE_MISSING;
 import static java.util.Collections.singletonList;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
@@ -39,8 +41,9 @@ public class TumblrAccountRepositoryServiceImpl implements TumblrAccountReposito
   }
 
   @Override
-  public Page<TumblrAccount> findAll(final Integer page, final Integer pageSize) {
-    return tumblrAccountRepository.findAll(getPageRequest(page, pageSize));
+  public Page<TumblrAccount> findAll(final Integer page, final Integer size) {
+    validateFindAllParams(page, size);
+    return tumblrAccountRepository.findAll(getPageRequest(page, size));
   }
 
   private Optional<TumblrAccount> findByName(final String name) {
@@ -48,9 +51,15 @@ public class TumblrAccountRepositoryServiceImpl implements TumblrAccountReposito
     return tumblrAccountRepository.findByName(name);
   }
 
-  private Pageable getPageRequest(final Integer page, final Integer pageSize) {
+  private Pageable getPageRequest(final Integer page, final Integer size) {
     Sort sort = new Sort(new Sort.Order(ASC, "id"));
-    return new PageRequest(page, pageSize, sort);
+    return new PageRequest(page, size, sort);
+  }
+
+  private void validateFindAllParams(final Integer page, final Integer size) {
+    if(page == null || size == null) {
+      throw new ServiceException(PAGE_SIZE_MISSING);
+    }
   }
 
   private TumblrAccount saveAccount(final TumblrAccount tumblrAccount) {

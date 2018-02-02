@@ -1,13 +1,16 @@
 package io.falcon.falcontest.repository.service.impl;
 
 import org.junit.After;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import io.falcon.falcontest.AbstractServiceTest;
 import io.falcon.falcontest.model.TumblrAccount;
 import io.falcon.falcontest.repository.TumblrAccountRepository;
+import io.falcon.falcontest.repository.service.ServiceException;
 import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,6 +23,9 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
 
   @Autowired
   private TumblrAccountRepository tumblrAccountRepository;
+
+  @Rule
+  public ExpectedException eex = ExpectedException.none();
 
   @Test
   public void createTumblrAccount() {
@@ -71,6 +77,27 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
     assertThat(page.getContent().size(), is(0));
   }
 
+  @Test
+  public void pageParamIsMissing() {
+    eex.expect(ServiceException.class);
+    eex.expectMessage("Page and/or size parameters are missing");
+    tumblrAccountRepositoryService.findAll(null, 4);
+  }
+
+  @Test
+  public void sizeParamIsMissing() {
+    eex.expect(ServiceException.class);
+    eex.expectMessage("Page and/or size parameters are missing");
+    tumblrAccountRepositoryService.findAll(2, null);
+  }
+
+  @Test
+  public void allParamsMissing() {
+    eex.expect(ServiceException.class);
+    eex.expectMessage("Page and/or size parameters are missing");
+    tumblrAccountRepositoryService.findAll(null, null);
+  }
+
   @After
   public void deleteAccounts() {
     tumblrAccountRepository.deleteAll();
@@ -83,6 +110,4 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
       .setAccType("Test Type")
       .setPopularity(3);
   }
-
-
 }

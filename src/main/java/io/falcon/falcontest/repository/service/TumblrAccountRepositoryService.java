@@ -8,5 +8,5 @@ public interface TumblrAccountRepositoryService {
 
   TumblrAccount createTumblrAccount(TumblrAccount tumblrAccount);
 
-  Page<TumblrAccount> findAll(Integer page, Integer pageSize);
+  Page<TumblrAccount> findAll(Integer page, Integer size);
 }
