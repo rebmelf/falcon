@@ -27,6 +27,8 @@ public class RedisConfiguration {
   @Value("${spring.redis.port}")
   private int port;
 
+  private static final String socialTopic = "pubsub:social";
+
   @Bean
   JedisConnectionFactory jedisConnectionFactory() {
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
@@ -63,6 +65,6 @@ public class RedisConfiguration {
 
   @Bean
   ChannelTopic topic() {
-    return new ChannelTopic("pubsub:social");
+    return new ChannelTopic(socialTopic);
   }
 }

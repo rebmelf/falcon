@@ -21,11 +21,11 @@ public abstract class LogMessage {
   public static final String PUBLISHING_REDIS_MESSAGE = "Publishing redis message {0}";
   public static final String PUBLISHING_REDIS_MESSAGE_FAILED = "Publishing redis message {0} failed";
 
-  public static String getLogMessage(String message) {
+  public static String getLogMessage(final String message) {
     return getLogMessage(message, null);
   }
 
-  public static String getLogMessage(String message, List<String> params) {
+  public static String getLogMessage(final String message, final List<String> params) {
     return isEmpty(params) ? message : MessageFormat.format(message, params.toArray());
   }
 }

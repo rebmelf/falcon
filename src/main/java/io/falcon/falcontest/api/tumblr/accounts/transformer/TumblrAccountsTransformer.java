@@ -14,13 +14,13 @@ public class TumblrAccountsTransformer {
 
   private TumblrAccountTransformer transformer = new TumblrAccountTransformer();
 
-  public TumblrAccountsResponse convert(Page<TumblrAccount> page) {
+  public TumblrAccountsResponse convert(final Page<TumblrAccount> page) {
     return new TumblrAccountsResponse()
       .setTumblrAccountResponses(getItemList(page))
       .setTotal(page.getTotalElements());
   }
 
-  private List<TumblrAccountResponse> getItemList(Page<TumblrAccount> page) {
+  private List<TumblrAccountResponse> getItemList(final Page<TumblrAccount> page) {
     return page.getContent().stream()
       .map(transformer::transform)
       .collect(Collectors.toList());

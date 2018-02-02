@@ -22,6 +22,7 @@ import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 import static io.falcon.falcontest.message.LogMessage.ENTER_ENDPOINT;
 import static io.falcon.falcontest.message.LogMessage.LEAVE_ENDPOINT;
 import static io.falcon.falcontest.message.LogMessage.getLogMessage;
+import static io.falcon.falcontest.websocket.WebSocketConfiguration.getFalconDestination;
 import static java.util.Collections.singletonList;
 import static org.springframework.http.HttpStatus.ACCEPTED;
 import static org.springframework.http.HttpStatus.OK;
@@ -58,7 +59,7 @@ public class TumblrAccountsController {
   public void addTumblrAccount(@RequestBody final AddTumblrAccountRequest addTumblrAccountRequest) {
     logger.info(getLogMessage(ENTER_ENDPOINT, singletonList("addTumblrAccount")));
     messagePublisher.publish(addTumblrAccountRequest);
-    template.convertAndSend("/topic/received-messages", addTumblrAccountRequest);
+    template.convertAndSend(getFalconDestination(), addTumblrAccountRequest);
     logger.info(getLogMessage(LEAVE_ENDPOINT, singletonList("addTumblrAccount")));
   }
 

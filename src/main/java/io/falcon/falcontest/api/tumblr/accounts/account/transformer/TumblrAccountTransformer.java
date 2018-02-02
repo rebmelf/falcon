@@ -5,7 +5,7 @@ import io.falcon.falcontest.model.TumblrAccount;
 
 public class TumblrAccountTransformer {
 
-  public TumblrAccountResponse transform(TumblrAccount tumblrAccount) {
+  public TumblrAccountResponse transform(final TumblrAccount tumblrAccount) {
     return new TumblrAccountResponse()
       .setId(tumblrAccount.getId())
       .setName(tumblrAccount.getName())
