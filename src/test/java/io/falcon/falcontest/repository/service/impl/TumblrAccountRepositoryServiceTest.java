@@ -39,8 +39,10 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
   @Test
   public void onlyOneRecordCreatedWithTheSameName() {
     final String name = "Test Name";
-
     tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(name));
+
+    eex.expect(ServiceException.class);
+    eex.expectMessage("Account already exists");
     tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(name));
 
     final long records = tumblrAccountRepository.count();
@@ -78,6 +80,20 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
   }
 
   @Test
+  public void popularitySetTooHigh() {
+    eex.expect(ServiceException.class);
+    eex.expectMessage("Invalid popularity value");
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name", 6));
+  }
+
+  @Test
+  public void popularitySetToolow() {
+    eex.expect(ServiceException.class);
+    eex.expectMessage("Invalid popularity value");
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name", -1));
+  }
+
+  @Test
   public void pageParamIsMissing() {
     eex.expect(ServiceException.class);
     eex.expectMessage("Page and/or size parameters are missing");
@@ -104,9 +120,13 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
   }
 
   private TumblrAccount tumblrAccount(final String name) {
+    return tumblrAccount(name, 3);
+  }
+
+  private TumblrAccount tumblrAccount(final String name, final Integer popularity) {
     return new TumblrAccount()
       .setName(name)
       .setAccType("Test Type")
-      .setPopularity(3);
+      .setPopularity(popularity);
   }
 }

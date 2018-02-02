@@ -20,6 +20,9 @@ public abstract class LogMessage {
   public static final String SAVING_ACCOUNT = "Saving account with name {0}";
   public static final String PUBLISHING_REDIS_MESSAGE = "Publishing redis message {0}";
   public static final String PUBLISHING_REDIS_MESSAGE_FAILED = "Publishing redis message {0} failed";
+  public static final String INVALID_POPULARITY_FOR_ACCOUNT = "Invalid popularity for account name {0}";
+  public static final String ACCOUNT_ALREADY_EXISTS_WITH_NAME = "Account {0} already exists";
+
 
   public static String getLogMessage(final String message) {
     return getLogMessage(message, null);

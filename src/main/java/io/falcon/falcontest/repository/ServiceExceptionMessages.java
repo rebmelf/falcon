@@ -1,6 +1,8 @@
 package io.falcon.falcontest.repository;
 
-public class ServiceExceptionMessages {
+public interface ServiceExceptionMessages {
 
-  public static final String PAGE_SIZE_MISSING = "Page and/or size parameters are missing";
+  String PAGE_SIZE_MISSING = "Page and/or size parameters are missing";
+  String INVALID_POPULARITY = "Invalid popularity value";
+  String ACCOUNT_ALREADY_EXISTS = "Account already exists";
 }
