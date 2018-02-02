@@ -29,9 +29,9 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
 
   @Test
   public void createTumblrAccount() {
-    TumblrAccount tumblrAccount = tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("testId", "name"));
+    TumblrAccount tumblrAccount = tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name"));
 
-    final TumblrAccount persistedAcc = tumblrAccountRepository.findOne("testId");
+    final TumblrAccount persistedAcc = tumblrAccountRepository.findOne(tumblrAccount.getId());
 
     assertThat(persistedAcc.getName(), is(tumblrAccount.getName()));
   }
@@ -40,8 +40,8 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
   public void onlyOneRecordCreatedWithTheSameName() {
     final String name = "Test Name";
 
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("testId1", name));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("testId2", name));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(name));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount(name));
 
     final long records = tumblrAccountRepository.count();
     assertThat(records, is(1L));
@@ -49,11 +49,11 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
 
   @Test
   public void pagingWithValueToReturn() {
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id1", "name1"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id2", "name2"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id3", "name3"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id4", "name4"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id5", "name5"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name1"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name2"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name3"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name4"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name5"));
 
     final Page<TumblrAccount> page = tumblrAccountRepositoryService.findAll(0, 4);
 
@@ -64,11 +64,11 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
 
   @Test
   public void notExistingPage() {
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id1", "name1"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id2", "name2"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id3", "name3"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id4", "name4"));
-    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("id5", "name5"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name1"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name2"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name3"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name4"));
+    tumblrAccountRepositoryService.createTumblrAccount(tumblrAccount("name5"));
 
     final Page<TumblrAccount> page = tumblrAccountRepositoryService.findAll(2, 4);
 
@@ -103,9 +103,8 @@ public class TumblrAccountRepositoryServiceTest extends AbstractServiceTest {
     tumblrAccountRepository.deleteAll();
   }
 
-  private TumblrAccount tumblrAccount(final String id, final String name) {
+  private TumblrAccount tumblrAccount(final String name) {
     return new TumblrAccount()
-      .setId(id)
       .setName(name)
       .setAccType("Test Type")
       .setPopularity(3);

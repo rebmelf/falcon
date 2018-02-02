@@ -34,7 +34,6 @@ public class SocialMessageListener implements MessageListener {
       final AddTumblrAccountRequest request = mapper.readValue(message.toString(), AddTumblrAccountRequest.class);
       logger.info(getLogMessage(HANDLING_REDIS_MESSAGE, singletonList(AddTumblrAccountRequest.class.getName())));
       tumblrAccountRepositoryService.createTumblrAccount(new TumblrAccount()
-        .setId("ID" + request.getName())
         .setName(request.getName())
         .setAccType(request.getType())
         .setPopularity(request.getPopularity()));

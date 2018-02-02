@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.falcon.falcontest.model.TumblrAccount;
 import io.falcon.falcontest.repository.TumblrAccountRepository;
+import io.falcon.falcontest.repository.service.IdGenerator;
 import io.falcon.falcontest.repository.service.ServiceException;
 import io.falcon.falcontest.repository.service.TumblrAccountRepositoryService;
 
@@ -32,12 +33,15 @@ public class TumblrAccountRepositoryServiceImpl implements TumblrAccountReposito
   @Autowired
   private TumblrAccountRepository tumblrAccountRepository;
 
+  @Autowired
+  private IdGenerator idGenerator;
+
   @Override
   @Transactional
   public TumblrAccount createTumblrAccount(final TumblrAccount tumblrAccount) {
-    logger.info("Creating account:" + tumblrAccount.getName());
     return findByName(tumblrAccount.getName())
-      .orElseGet(() -> saveAccount(tumblrAccount));
+      .orElseGet(() ->
+        saveAccount(tumblrAccount.setId(idGenerator.generate(TumblrAccount.PREFIX))));
   }
 
   @Override
@@ -57,7 +61,7 @@ public class TumblrAccountRepositoryServiceImpl implements TumblrAccountReposito
   }
 
   private void validateFindAllParams(final Integer page, final Integer size) {
-    if(page == null || size == null) {
+    if (page == null || size == null) {
       throw new ServiceException(PAGE_SIZE_MISSING);
     }
   }

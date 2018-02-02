@@ -11,6 +11,8 @@ public class TumblrAccount {
 
   static final String TABLE_NAME = "fa_tumblr_account";
 
+  public static final String PREFIX = "TA";
+
   @Id
   @Column(name = "id")
   private String id;
