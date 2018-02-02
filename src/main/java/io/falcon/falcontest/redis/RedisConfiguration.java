@@ -32,7 +32,7 @@ public class RedisConfiguration {
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
     jedisConnectionFactory.setHostName(host);
     jedisConnectionFactory.setPort(port);
-    return new JedisConnectionFactory();
+    return jedisConnectionFactory;
   }
 
   @Bean

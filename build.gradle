@@ -1,5 +1,4 @@
 group 'io.falcon'
-version '1.0-SNAPSHOT'
 
 buildscript {
   repositories {
@@ -10,18 +9,26 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+    classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
   }
 }
+
+group = 'falconiotest'
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.palantir.docker'
+
+jar {
+  baseName = 'io.falcon.falcontest'
+  version = '1.0.0-SNAPSHOT'
+}
 
 sourceCompatibility = 1.8
 
 repositories {
   mavenCentral()
-
 }
 
 sourceSets {
@@ -55,6 +62,12 @@ dependencies {
 
   testCompile group: 'com.h2database',           name: 'h2',                            version: '1.4.190'
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}
+
+docker {
+  name "${project.group}/${jar.baseName}"
+  files jar.archivePath
+  buildArgs(['JAR_FILE': "${jar.archiveName}"])
 }
 
 task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
