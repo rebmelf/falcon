@@ -15,7 +15,6 @@ public class TumblrAccountsTransformer {
   private TumblrAccountTransformer transformer = new TumblrAccountTransformer();
 
   public TumblrAccountsResponse convert(Page<TumblrAccount> page) {
-
     return new TumblrAccountsResponse()
       .setTumblrAccountResponses(getItemList(page))
       .setTotal(page.getTotalElements());

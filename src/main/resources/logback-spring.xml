@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <springProfile name="unittest">
+        <!-- Changed the include to defaults.xml to override standard spring console and file logging but keep debug functionality -->
+        <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+        <!-- now that we have excluded the spring base.xml console appender we can define a new one -->
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%date{dd MMM yyyy;HH:mm:ss.SSS} %-5level [%thread] %logger{5} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+        <logger name="org.apache.solr" level="ERROR" />
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local">
+        <!-- Changed the include to defaults.xml to override standard spring console and file logging but keep debug functionality -->
+        <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+        <logger name="org.hibernate.type" level="TRACE" />
+
+        <!-- now that we have excluded the spring base.xml console appender we can define a new one -->
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%date{dd MMM yyyy;HH:mm:ss.SSS} %-5level [%thread] %logger{5} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="docker">
+        <!-- Changed the include to defaults.xml to override standard spring console and file logging but keep debug functionality -->
+        <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+        <logger name="org.hibernate.type" level="TRACE" />
+
+        <!-- now that we have excluded the spring base.xml console appender we can define a new one -->
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%date{dd MMM yyyy;HH:mm:ss.SSS} %-5level [%thread] %logger{5} - %msg%n</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+</configuration>
+
