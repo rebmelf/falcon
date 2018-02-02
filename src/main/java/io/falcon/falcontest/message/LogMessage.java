@@ -5,6 +5,11 @@ import java.util.List;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+/**
+ * This class provides basic functions to properly store and format log messages.
+ * The class does not handle to few/too much parameters, although it formats the message,
+ * it requires the attention of the developer to use it properly.
+ */
 public abstract class LogMessage {
 
   public static final String ENTER_ENDPOINT = "Entering endpoint {0}";
