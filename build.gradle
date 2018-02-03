@@ -60,7 +60,9 @@ dependencies {
   compile     group: 'com.querydsl',             name: 'querydsl-jpa',                  version: '4.1.4'
   querydslapt group: 'com.querydsl',             name: 'querydsl-apt',                  version: '4.1.4'
 
+  testCompile group: 'com.github.kstyrc',        name: 'embedded-redis',                version: '0.6'
   testCompile group: 'com.h2database',           name: 'h2',                            version: '1.4.190'
+  testCompile group: 'io.rest-assured',          name: 'rest-assured',                  version: '3.0.0'
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 

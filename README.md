@@ -17,6 +17,10 @@ Currently two endpoints are available:
   "popularity": 3
 }
 ```
+The following header is required for the calls:
+```
+Content-Type: application/json
+```
 
 ## Database setup
 The used database was mysql, the initialization script can be located at /src/main/resources/db/initial/DB_initialization.sql .
@@ -54,6 +58,10 @@ I used OSX during development, here, everything is exposed as localhost, so for 
 
 For building the application, please run ./gradlew build docker from the root of the project.
 
+
+## UI
+
+The html can be found at http://localhost:8080/ , the Connect button connects to the websocket, then the new message is shown after each send. 
 ## Security
 No security was used, so the spring security is not turned on, and redis password is not set. Although the user is created for the docker, currently the root user is used to connect the database there.
 
