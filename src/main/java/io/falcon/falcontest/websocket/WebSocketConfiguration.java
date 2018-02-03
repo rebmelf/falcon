@@ -11,13 +11,15 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
 
   private static final String destinationPrefix = "/topic";
+  private static final String appDestinationPrefix = "/app";
+  private static final String destination = "/received-messages";
   private static final String endpoint = "/falcon";
   private static final String allowedOrigins = "*";
 
   @Override
   public void configureMessageBroker(final MessageBrokerRegistry config) {
     config.enableSimpleBroker(destinationPrefix);
-    config.setApplicationDestinationPrefixes("/app");
+    config.setApplicationDestinationPrefixes(appDestinationPrefix);
   }
 
   @Override
@@ -28,6 +30,6 @@ public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfig
   }
 
   public static String getFalconDestination() {
-    return destinationPrefix + endpoint;
+    return destinationPrefix + destination;
   }
 }
