@@ -34,6 +34,8 @@ paths:
       responses:
         202:
           description: The data was published for creation
+        400:
+          $ref: '#/definitions/ErrorMessage'
         default:
           description: An error happened
     get:
@@ -43,7 +45,9 @@ paths:
         - $ref: '#/parameters/size'
       responses:
         200:
-          $ref: '#/definitions/TumblrAccountResponse'
+          $ref: '#/definitions/TumblrAccountsResponse'
+        400:
+          $ref: '#/definitions/ErrorMessage'
         default:
           description: An error happened
 
@@ -113,3 +117,11 @@ definitions:
         minimum: 1
         maximum: 5
 
+  ErrorMessage:
+    type: object
+    description: The REST API Error object
+    required:
+      - errorMessage
+    properties:
+      errorMessage:
+        type: string
